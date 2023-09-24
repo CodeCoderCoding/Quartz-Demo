@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 配置作业 -->
+    <bean id="helloJob" class="com.supremepole.springquartzhelloworld.HelloJob" />
+
+    <!-- 配置调度器 -->
+    <bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <bean class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+                    <property name="jobDetail" ref="helloJobDetail" />
+                    <property name="repeatInterval" value="5000" /> <!-- 每隔5秒触发一次 -->
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 配置作业详情 -->
+    <bean id="helloJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.supremepole.springquartzhelloworld.HelloJob" />
+    </bean>
+
+</beans>
